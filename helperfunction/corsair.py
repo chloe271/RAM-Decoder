@@ -6,10 +6,11 @@ def clean(vers):
   
 def manu(code):
   version_dict = {
-    "2": "Power Chip (PSC)",
+    "2": "Elpida",
     "3": "Micron",
     "4": "Samsung",
     "5": "SK Hynix",
+    "7": "Powerchip (PSC",
     "8": "Nanya"
   }
   vers = code[0]
@@ -18,7 +19,7 @@ def manu(code):
 
 def dens(code):
   version_dict = {
-    "2": "2",
+    "2": "4",
     "3": "8",
     "4": "16"
   }

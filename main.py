@@ -1,4 +1,5 @@
 import datetime, asyncio
+from prettytable import PrettyTable
 from discord.ext import commands
 import discord, os, requests, os, keep_alive
 from helperfunction.all import *
@@ -28,12 +29,25 @@ async def fbga(ctx, fbga):
   partnumber = (micron(fbga))
   embed=discord.Embed(title=fbga.upper(), url=f"https://www.micron.com/support/tools-and-utilities/fbga?fbga={fbga}",  description=partnumber, color=0xadd8e6)
   embed.set_thumbnail(url=f"https://upload.wikimedia.org/wikipedia/de/thumb/0/03/Micron_Logo.svg/1200px-Micron_Logo.svg.png")
-  embed.add_field(name=f"Rev {revision(partnumber)}", value=f"{version(partnumber)}", inline=True)
-  embed.add_field(name=f"{density(partnumber)}", value=f"{modtype(partnumber)}", inline=True)
-  embed.add_field(name=f"{voltage(partnumber)}", value=f"{misc(partnumber)}", inline=True)
-  embed.set_footer(text="_exa")
+  try:
+    embed.add_field(name=f"Rev {revision(partnumber)}", value=f"{version(partnumber)}", inline=True)
+  except: pass
+  try:
+    embed.add_field(name=f"{density(partnumber)}", value=f"{modtype(partnumber)}", inline=True)
+  except: pass
+  try:
+    embed.add_field(name=f"{voltage(partnumber)}", value=f"{misc(partnumber)}", inline=True)
+  except: pass
+  try:
+    embed.set_footer(text="_exa")
+  except: pass
   embed.timestamp = datetime.datetime.utcnow()
   await ctx.reply(embed=embed)
+  table = PrettyTable(["Attribute", partnumber])
+  table.add_row(["Revision", revision(partnumber)])
+  table.add_row(["Configuration", density(partnumber)])
+  table.add_row(["DDR Version", version(partnumber)])
+  await ctx.reply(table)
   
 @bot.command()
 async def corsair(ctx, *, vers):
@@ -119,7 +133,6 @@ async def help_patriot(ctx):
   embed.set_footer(text="_exa")
   embed.timestamp = datetime.datetime.utcnow()
   await ctx.reply(embed=embed)
-
 
 
 
